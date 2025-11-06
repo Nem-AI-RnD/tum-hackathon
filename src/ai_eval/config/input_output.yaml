@@ -1,0 +1,35 @@
+# input:
+#     service:
+#           CSVService:         
+#               path: generated_test_data.csv
+#               root_path: raw_documents        
+#         #   XLSXService:         
+#         #       path: my_input_file2.xlsx      
+
+output:
+    service:
+        Opik:
+            metrics: 
+                AnswerRelevancyMetric: 
+                    threshold: 0.5
+                FaithfulnessMetric: 
+                    threshold: 0.7
+                ContextualRecallMetric: 
+                    threshold: 0.7
+                ContextualRelevanceMetric:
+                    threshold: 0.7
+                ContextualPrecisionMetric:
+                    threshold: 0.7                
+        # Langfuse:
+        #     metrics: 
+        #         AnswerRelevancyMetric: 
+        #             threshold: 0.5
+        #         FaithfulnessMetric: 
+        #             threshold: 0.7
+        #         ContextualRecallMetric: 
+        #             threshold: 0.7
+        #         ContextualRelevanceMetric:
+        #             threshold: 0.7
+        #         ContextualPrecisionMetric:
+        #             threshold: 0.7
+
