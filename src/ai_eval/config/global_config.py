@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Determine the environment: "vm" (local machine) or "docker" (container local or remote)
 using = "vm"
 # using = "docker"
@@ -19,7 +23,7 @@ defaults = {
         "GCP_FIRESTORE_COLLECTION": "Synthesis-Requests",
         "GCP_CS_BUCKET": "ai-assistant-eval",
         # "LANGFUSE_DATASET_NAME": "nemyevaluation",
-        "MODEL_PROVIDER": "ollama",  # ollama google
+        "MODEL_PROVIDER": "google",  # ollama google
     },
     "docker": {
         "CODE_DIR": "/app/src/",

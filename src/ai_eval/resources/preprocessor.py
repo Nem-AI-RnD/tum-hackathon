@@ -13,8 +13,9 @@ from langchain.document_loaders import PyPDFLoader
 
 from ai_eval.config import global_config as glob
 from ai_eval.config.config import model_list
-from ai_eval.services.clients import GCPClient
-from ai_eval.services.file_gcp import stream_gcs_pdf
+
+# from ai_eval.services.clients import GCPClient
+# from ai_eval.services.file_gcp import stream_gcs_pdf
 from ai_eval.services.logger import LoggerFactory
 from ai_eval.utils.utils import list_objects, timer
 
@@ -30,7 +31,7 @@ class Preprocessor:
             bucket_name (str): The name of the GCP bucket.
         """
         self.bucket_name = bucket_name
-        self.gcp_client = GCPClient(bucket_name)
+        # self.gcp_client = GCPClient(bucket_name)
         self.verbose = verbose
 
     @timer
@@ -56,9 +57,9 @@ class Preprocessor:
             for prefix in blobs:
                 if not prefix.endswith(".pdf"):
                     continue
-                streamed_text = stream_gcs_pdf(prefix)
-                content = [doc for doc in streamed_text]
-                documents.extend(content)
+                # streamed_text = stream_gcs_pdf(prefix)
+                # content = [doc for doc in streamed_text]
+                # documents.extend(content)
                 my_logger.info(f"Processed {prefix}")
         elif source == "local":
             if blob_path is not None:
