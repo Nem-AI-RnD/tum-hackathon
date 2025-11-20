@@ -9,9 +9,8 @@ from langchain_core.language_models.llms import LLM
 
 from ai_eval.config import global_config as glob
 from ai_eval.resources import prompts as pr
-from ai_eval.resources.llm_aaj import (
+from ai_eval.resources.llm_aaj import (  # generate_qa_couples,
     eval_qa_couples,
-    generate_qa_couples,
     generate_qa_memory,
 )
 from ai_eval.resources.preprocessor import Preprocessor

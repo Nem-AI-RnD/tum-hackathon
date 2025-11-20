@@ -6,21 +6,21 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Determine the environment: "vm" (local machine) or "docker" (container local or remote)
-using = "vm"
-# using = "docker"
+using = "local"
+# using = "local-docker"
 
 # Define package root
 package_root = Path(__file__).resolve().parents[3]
 
 # Default configurations for "vm" and "docker"
 defaults = {
-    "vm": {
+    "local": {
         "CODE_DIR": str(package_root / "src"),
         "DATA_DIR": "",
         "DATA_PKG_DIR": str(package_root / "data"),
         "MODEL_PROVIDER": "google",  # ollama google
     },
-    "docker": {
+    "local-docker": {
         "CODE_DIR": "/app/src/",
         "DATA_DIR": "",
         "DATA_PKG_DIR": "/app/data/",

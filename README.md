@@ -31,7 +31,6 @@ This repository contains the code utilities and examples developed for the **TUM
 │   │   │   ├── eval_dataset_builder.py
 │   │   │   ├── get_models.py     # Vertex AI model initialization
 │   │   │   ├── preprocessor.py   # Document chunking
-│   │   │   ├── predictor.py
 │   │   │   ├── prompts.py        # Prompt templates
 │   │   │   ├── llm_aaj.py        # LLM utilities
 │   │   │   └── data_schemas.py
