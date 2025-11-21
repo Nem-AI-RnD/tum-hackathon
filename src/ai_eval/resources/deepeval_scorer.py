@@ -3,12 +3,11 @@ from typing import Dict, List
 
 from deepeval import evaluate
 from deepeval.dataset import EvaluationDataset
-from deepeval.metrics import (
+from deepeval.metrics import (  # ContextualRelevancyMetric,
     AnswerRelevancyMetric,
     BaseMetric,
     ContextualPrecisionMetric,
     ContextualRecallMetric,
-    ContextualRelevancyMetric,
     FaithfulnessMetric,
 )
 
@@ -23,6 +22,14 @@ my_logger = LoggerFactory().create_module_logger()
 
 
 class DeepEvalScorer:
+    # Default metric weights
+    DEFAULT_METRIC_WEIGHTS = {
+        'Answer Relevancy': 0.20,
+        'Faithfulness': 0.30,
+        'Contextual Recall': 0.25,
+        'Contextual Precision': 0.25,
+    }
+
     def __init__(self, evaluation_dataset: EvaluationDataset):
         """
         Initialize the DeepEvalScorer with an evaluation dataset.
@@ -56,7 +63,6 @@ class DeepEvalScorer:
             "AnswerRelevancyMetric": AnswerRelevancyMetric,
             "FaithfulnessMetric": FaithfulnessMetric,
             "ContextualRecallMetric": ContextualRecallMetric,
-            # "ContextualRelevanceMetric": ContextualRelevancyMetric,
             "ContextualPrecisionMetric": ContextualPrecisionMetric,
         }
 
@@ -64,7 +70,6 @@ class DeepEvalScorer:
             if metric_name in metric_classes:
                 metric_class = metric_classes[metric_name]
                 metrics.append(metric_class(model=self.deepeval_model, **params))
-
         return metrics
 
     @retry
@@ -98,16 +103,33 @@ class DeepEvalScorer:
             my_logger.error(f"Evaluation failed: {str(e)}")
             return {}
 
-    def get_overall_metrics(self) -> Dict[str, float]:
+    def get_overall_metrics(
+        self, metric_weights: Dict[str, float] = None
+    ) -> Dict[str, float]:
         """
         Get the overall metric scores from the evaluation results.
         Calculates the average score for each metric across all test cases.
 
+        :param metric_weights: Optional dictionary mapping metric names to their weights for weighted average calculation.
+                              If not provided, default weights will be used (Answer Relevancy: 0.30, Faithfulness: 0.25,
+                              Contextual Recall: 0.25, Contextual Precision: 0.20).
         :return: A dictionary mapping metric names to their overall scores.
         """
         assert (
             self.results is not None
         ), "Results have not been calculated yet. Run calculate_scores() first."
+
+        # Use provided weights or defaults
+        weights = (
+            metric_weights
+            if metric_weights is not None
+            else self.DEFAULT_METRIC_WEIGHTS.copy()
+        )
+
+        # Normalize weights to ensure they sum to 1
+        weight_sum = sum(weights.values())
+        if weight_sum > 0:
+            weights = {key: value / weight_sum for key, value in weights.items()}
 
         # Collect all metric scores by metric name using defaultdict
         metric_scores = defaultdict(list)
@@ -122,9 +144,25 @@ class DeepEvalScorer:
             for metric_name, scores in metric_scores.items()
         }
 
-        # Calculate overall performance as the average of all metrics
+        # Calculate simple average performance
         overall_metrics['Average Performance'] = sum(overall_metrics.values()) / len(
             overall_metrics
+        )
+
+        # Calculate weighted average based on metric weights
+        weighted_sum = 0.0
+        total_weight = 0.0
+
+        for metric_name, avg_score in overall_metrics.items():
+            if metric_name in weights:
+                weight = weights[metric_name]
+                weighted_sum += avg_score * weight
+                total_weight += weight
+
+        overall_metrics['Weighted Average Performance'] = (
+            weighted_sum / total_weight
+            if total_weight > 0
+            else overall_metrics['Average Performance']
         )
 
         return overall_metrics
