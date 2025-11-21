@@ -10,7 +10,8 @@ chat_model:
 
 embedding_model:
     google: 
-        Gecko: text-embedding-005   
+        # Gecko: text-embedding-005 
+        multi: text-multilingual-embedding-002  
     ollama: 
         Mixedbread.ai large: mxbai-embed-large
 
