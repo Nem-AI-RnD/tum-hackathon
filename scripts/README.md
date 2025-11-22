@@ -9,15 +9,18 @@ This directory contains scripts to generate answers for the QA dataset using dif
 Lightweight script using TFIDF retrieval and Claude Haiku.
 
 **Requirements:**
+
 - `ANTHROPIC_API_KEY` in `.env` file
 
 **Usage:**
+
 ```bash
 cd /Users/karl/Documents/tum-hackathon
 python scripts/generate_simple_rag_answers.py
 ```
 
 **Features:**
+
 - Fast execution (no external vector database needed)
 - TFIDF-based document retrieval
 - Claude Haiku for answer generation
@@ -28,17 +31,20 @@ python scripts/generate_simple_rag_answers.py
 Production-grade RAG with Jina embeddings and LlamaIndex.
 
 **Requirements:**
+
 - `ANTHROPIC_API_KEY` in `.env` file
 - `JINA_API_KEY` in `.env` file
 - Qdrant (optional, can use in-memory vectorstore)
 
 **Usage:**
+
 ```bash
 cd /Users/karl/Documents/tum-hackathon
 python scripts/generate_rag_answers.py
 ```
 
 **Features:**
+
 - Advanced Jina v3 embeddings
 - LlamaIndex query engine
 - Configurable retrieval settings
@@ -49,11 +55,13 @@ python scripts/generate_rag_answers.py
 Compares generated answers with original answers in the dataset.
 
 **Usage:**
+
 ```bash
 python scripts/compare_results.py
 ```
 
 **Output:**
+
 - Similarity metrics between generated and original answers
 - Per-question comparison statistics
 - Summary report saved to `data/comparison_results.json`
@@ -80,6 +88,7 @@ All scripts generate results in `data/rag_results.json` with the following struc
 ## Quick Start
 
 1. Ensure you have the required API keys in `.env`:
+
    ```
    ANTHROPIC_API_KEY=your_key_here
    # Optional for advanced RAG:
@@ -87,6 +96,7 @@ All scripts generate results in `data/rag_results.json` with the following struc
    ```
 
 2. Run the simple version:
+
    ```bash
    python scripts/generate_simple_rag_answers.py
    ```
@@ -105,15 +115,17 @@ All scripts generate results in `data/rag_results.json` with the following struc
 ## Troubleshooting
 
 **Error: "ANTHROPIC_API_KEY not found"**
+
 - Ensure `.env` file exists in project root
 - Verify the API key is correctly set
 
 **Error: "JINA_API_KEY not found"** (only for `generate_rag_answers.py`)
+
 - Get a free API key from https://jina.ai
 - Add it to your `.env` file
 
 **Slow execution**
+
 - Use `generate_simple_rag_answers.py` instead
 - Reduce the number of questions to process (edit the script)
 - Adjust `k` parameter to retrieve fewer documents
-
