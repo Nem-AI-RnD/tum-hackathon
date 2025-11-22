@@ -28,14 +28,12 @@ This repository contains the code utilities and examples developed for the **TUM
 │   │   │   └── model_config.yaml
 │   │   ├── resources/            # RAG and evaluation components
 │   │   │   ├── __init__.py
-│   │   │   ├── synthesizer.py    # QA data generation
 │   │   │   ├── rag_template.py   # RAG model templates (TF-IDF, FAISS)
 │   │   │   ├── deepeval_scorer.py # Evaluation metrics
 │   │   │   ├── eval_dataset_builder.py
 │   │   │   ├── get_models.py     # Vertex AI model initialization
 │   │   │   ├── preprocessor.py   # Document chunking
 │   │   │   ├── prompts.py        # Prompt templates
-│   │   │   ├── llm_aaj.py        # LLM utilities
 │   │   │   └── data_schemas.py
 │   │   ├── services/             # Infrastructure services
 │   │   │   ├── __init__.py
