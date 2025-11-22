@@ -43,6 +43,8 @@ dependencies = [
     "langchain-community>=0.3.31",
     "llama-index-llms-langchain>=0.7.1",
     "llama-index>=0.14.8",
+    "pydantic>=2.12.4",
+    "pytest>=9.0.1",
 ]
 
 authors = [
